@@ -78,7 +78,7 @@ if st.button("🚀 生成图片"):
                 "Authorization": f"Bearer {sk-Jd4OVoJWxUQc6QjktZY3OaxqE8LgkhJMhRnLIEI9FpIZ5rR2}"
             }
             
-            response = requests.post(https://api.vectorengine.ai, files=files, data=data, headers=headers)
+           response = requests.post("https://api.vectorengine.ai", files=files, data=data, headers=headers)
             
             if response.status_code == 200:
                 # 假设 API 返回 base64 图片
