@@ -60,7 +60,7 @@ GENERATION_API_URL = "https://api.vectorengine.ai"
 GENERATION_API_KEY = "sk-Jd4OVoJWxUQc6QjktZY3OaxqE8LgkhJMhRnLIEI9FpIZ5rR2"
 
 # 图像分析 API（Analysis API）
-ANALYSIS_API_URL = "https://api.vectorengine.ai"
+ANALYSIS_API_URL = "https://api.vectorengine.ai/analyze"
 ANALYSIS_API_KEY = "sk-Jd4OVoJWxUQc6QjktZY3OaxqE8LgkhJMhRnLIEI9FpIZ5rR2"
 
 # ---------------- 图像分析函数 ----------------
@@ -69,10 +69,10 @@ def analyze_image(image_file):
     调用图像分析 API，返回特征或标签列表
     """
     files = {"image": ("image.png", image_file)}
-    headers = {"Authorization": f"Bearer {sk-Jd4OVoJWxUQc6QjktZY3OaxqE8LgkhJMhRnLIEI9FpIZ5rR2}"}
+    headers = {"Authorization": f"Bearer {ANALYSIS_API_KEY}"}
 
     try:
-        response = requests.post("https://api.vectorengine.ai", files=files, headers=headers, timeout=30)
+        response = requests.post(ANALYSIS_API_URL, files=files, headers=headers, timeout=30)
         response.raise_for_status()
         result = response.json()
         return result.get("tags", [])
@@ -112,10 +112,10 @@ def generate_image():
             "size": size
         }
 
-        headers = {"Authorization": f"Bearer {sk-Jd4OVoJWxUQc6QjktZY3OaxqE8LgkhJMhRnLIEI9FpIZ5rR2}"}
+        headers = {"Authorization": f"Bearer {GENERATION_API_KEY}"}
 
         try:
-            response = requests.post("https://api.vectorengine.ai", files=files, data=data, headers=headers, timeout=60)
+            response = requests.post(GENERATION_API_URL, files=files, data=data, headers=headers, timeout=60)
         except requests.RequestException as e:
             st.error(f"请求失败: {e}")
             return
