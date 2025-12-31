@@ -79,7 +79,7 @@ if st.button("🚀 生成图片"):
             }
             
            response = requests.post("https://api.vectorengine.ai", files=files, data=data, headers=headers)
-            
+
             if response.status_code == 200:
                 # 假设 API 返回 base64 图片
                 result_base64 = response.json()["result_image"]
