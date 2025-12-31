@@ -64,33 +64,37 @@ if st.button("🚀 生成图片"):
         st.error("请先上传产品素材图")
     else:
         with st.spinner("AI 正在生成中..."):
-            files = {"image": source_image.getvalue()}
+            # 构建文件上传
+            files = {"image": ("source.png", source_image.getvalue())}
             if ref_image:
-                files["ref_image"] = ref_image.getvalue()
-            
+                files["ref_image"] = ("ref.png", ref_image.getvalue())
+
             data = {
                 "prompt": prompt,
                 "category": category,
                 "size": size
             }
-            
+
             headers = {
-                "Authorization": f"Bearer {sk-Jd4OVoJWxUQc6QjktZY3OaxqE8LgkhJMhRnLIEI9FpIZ5rR2}"
+                "Authorization": f"Bearer {API_KEY}"
             }
-            
-           response = requests.post("https://api.vectorengine.ai", files=files, data=data, headers=headers)
+
+            response = requests.post(API_URL, files=files, data=data, headers=headers)
 
             if response.status_code == 200:
                 # 假设 API 返回 base64 图片
-                result_base64 = response.json()["result_image"]
-                result_bytes = base64.b64decode(result_base64)
-                image = Image.open(io.BytesIO(result_bytes))
-                
-                result_placeholder.image(
-                    image,
-                    caption="生成结果",
-                    use_column_width=True
-                )
-                st.success("生成完成")
+                result_base64 = response.json().get("result_image")
+                if result_base64:
+                    result_bytes = base64.b64decode(result_base64)
+                    image = Image.open(io.BytesIO(result_bytes))
+
+                    result_placeholder.image(
+                        image,
+                        caption="生成结果",
+                        use_column_width=True
+                    )
+                    st.success("生成完成")
+                else:
+                    st.error("生成失败: API 返回结果为空")
             else:
                 st.error(f"生成失败: {response.text}")
