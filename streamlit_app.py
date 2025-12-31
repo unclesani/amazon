@@ -10,7 +10,7 @@ st.set_page_config(
 
 st.title("🛒 Amazon AI Visual Studio")
 
-st.markdown("上传产品图和参考图，生成 Amazon 风格图片")
+st.markdown("上传产品图和参考图，生成 Amazon 风格图片（Demo）")
 
 # ---------------- Sidebar ----------------
 with st.sidebar:
